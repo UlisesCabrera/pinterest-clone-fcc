@@ -1,0 +1,10 @@
+<div class="alert alert-dismissible" 
+     ng-class='alertClass'
+     role="alert" 
+     ng-if='message'>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  {{ message }}
+</div>
+
+<add-pin ng-if='$parent.currentUser()'></add-pin>
+<all-pins></all-pins>

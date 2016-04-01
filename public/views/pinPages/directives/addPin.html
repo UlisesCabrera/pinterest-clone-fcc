@@ -1,0 +1,29 @@
+
+<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target=".new-pin-modal">Add New Pin</button>
+<br/>
+
+<div id='newPinModal' class="modal fade new-pin-modal" tabindex="-1" role="dialog" aria-labelledby="myPinModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">New Pin</h4>
+        </div>
+        <div class='modal-body'>
+
+            <form novalidate name="newPinForm" ng-submit="addPin($parent.currentUser())" >
+              <div class="form-group">
+                <label for="pinName">pin Name:</label>
+                <input type="text"  ng-model='newPin.name' class="form-control" name="pinName" placeholder="Pin Name (required)" ng-required='true'>
+              </div>
+              <div class="form-group">
+                <label for="pin-img-url">Pin Image</label>
+                <input type="text" ng-model='newPin.imgUrl' class="form-control" name="pin-img-url" placeholder="Pin Img URL (required)" ng-required='true'>
+              </div>
+              <button type="submit" class="btn btn-default" ng-disabled="newPinForm.$invalid">Add Pin</button>
+            </form>
+
+        </div>
+    </div>
+  </div>
+</div>

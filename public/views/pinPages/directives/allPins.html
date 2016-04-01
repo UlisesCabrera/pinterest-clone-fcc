@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat='pin in pins'>
+    <div class="thumbnail">
+      <img ng-src="{{pin.imgUrl}}" alt="{{pin.name}}">
+      <div class="caption">
+        <h3>{{pin.name}}</h3>
+        <p>{{pin.owner_name}}</p>
+        <p ng-if='pin.name'>
+        <button class="btn btn-danger"
+                role="button" 
+                ng-if='pin.owner_id == $parent.currentUser()._id' 
+                ng-click='deletepin(pin._id, $index)'>Delete</button></p>
+      </div>
+    </div>
+  </div>
+</div>

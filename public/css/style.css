@@ -1,0 +1,15 @@
+body .row-signature {
+  padding: 1%;
+  background: linear-gradient(to bottom, #45484d 0%, #000000 100%); }
+  body .row-signature p {
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0; }
+
+.navbar-inverse .navbar-nav > li {
+  text-align: center; }
+
+.thumbnail {
+  max-width: 400px; }
