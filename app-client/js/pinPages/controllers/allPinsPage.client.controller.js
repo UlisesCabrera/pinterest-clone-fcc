@@ -1,4 +1,4 @@
-/*global angular $*/
+/*global angular $ Masonry*/
 
 module.exports = angular.module('PinPagesModule')
  .controller('AllPinsPageController', ['$scope','PinsSvc', 
@@ -10,18 +10,16 @@ module.exports = angular.module('PinPagesModule')
       owner_id : '',
       owner_name: ''
     };
-    
+
     // will hold all the books
     $scope.pins = [];
-    
-    
     
     PinsSvc.getAllPins()
         .then(
             function(res){
             	if (res.data.state === 'success') {
             		$scope.pins = res.data.pins;
-                
+            		
             	} else {
             		$scope.message = res.data.message;
             		

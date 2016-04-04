@@ -5,11 +5,15 @@ require('angular-route');
 window.$ = window.jQuery = require('jquery');
 require('bootstrap');
 
+
 //require sub-modules
+require('./common/angular.masonry.client.directive.js');
 require("./profilePage/profilePage.module");
 require("./pinPages/pinPages.module");
 
-angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule'])
+
+
+angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule','MasonryNg'])
     .config(function($routeProvider, $locationProvider) {
       $routeProvider
        .when('/', {

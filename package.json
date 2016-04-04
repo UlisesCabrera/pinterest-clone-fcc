@@ -21,6 +21,7 @@
     "jquery": "^2.2.2",
     "mongodb": "^2.1.14",
     "morgan": "~1.6.1",
+    "ng-masonry": "^1.0.3",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",
     "passport-local": "^1.0.0",
