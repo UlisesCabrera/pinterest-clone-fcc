@@ -3,7 +3,7 @@
     <img ng-src="{{pin.imgUrl}}" class='img-responsive' alt="{{pin.name}}">
 
     <h3>{{pin.name}}</h3>
-    <p>{{pin.owner_name}}</p>
+    <p><a href='#/wall/{{pin.owner_id}}/{{pin.owner_name}}'>{{pin.owner_name}}</a></p>
     <p ng-if='pin.name'>
     <button class="btn btn-danger"
             role="button" 

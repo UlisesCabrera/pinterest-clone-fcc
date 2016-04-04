@@ -10,17 +10,22 @@ require('bootstrap');
 require('./common/angular.masonry.client.directive.js');
 require("./profilePage/profilePage.module");
 require("./pinPages/pinPages.module");
+require("./userWallPage/userWallPage.module");
 
 
 
-angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule','MasonryNg'])
+angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule','UserWallPageModule','MasonryNg'])
     .config(function($routeProvider, $locationProvider) {
       $routeProvider
        .when('/', {
         templateUrl: 'views/pinPages/allPinsPage.html',
         controller: 'AllPinsPageController'
       })
-      .when('/profile/:user', {
+      .when('/wall/:userId/:userName', {
+        templateUrl: 'views/userWallPage/userWallPage.html',
+        controller: 'UserWallPageController'
+      })
+      .when('/profile/:userId', {
         templateUrl: 'views/profilePage/profilePage.html',
         controller: 'ProfilePageController',
 		resolve : {

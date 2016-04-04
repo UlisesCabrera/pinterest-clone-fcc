@@ -11,17 +11,22 @@ require('bootstrap');
 require('./common/angular.masonry.client.directive.js');
 require("./profilePage/profilePage.module");
 require("./pinPages/pinPages.module");
+require("./userWallPage/userWallPage.module");
 
 
 
-angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule','MasonryNg'])
+angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule','UserWallPageModule','MasonryNg'])
     .config(function($routeProvider, $locationProvider) {
       $routeProvider
        .when('/', {
         templateUrl: 'views/pinPages/allPinsPage.html',
         controller: 'AllPinsPageController'
       })
-      .when('/profile/:user', {
+      .when('/wall/:userId/:userName', {
+        templateUrl: 'views/userWallPage/userWallPage.html',
+        controller: 'UserWallPageController'
+      })
+      .when('/profile/:userId', {
         templateUrl: 'views/profilePage/profilePage.html',
         controller: 'ProfilePageController',
 		resolve : {
@@ -52,7 +57,7 @@ angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule
             });
         };
 }]);
-},{"./common/angular.masonry.client.directive.js":2,"./pinPages/pinPages.module":5,"./profilePage/profilePage.module":9,"angular":14,"angular-route":12,"bootstrap":15,"jquery":28}],2:[function(require,module,exports){
+},{"./common/angular.masonry.client.directive.js":2,"./pinPages/pinPages.module":5,"./profilePage/profilePage.module":9,"./userWallPage/userWallPage.module":14,"angular":18,"angular-route":16,"bootstrap":19,"jquery":32}],2:[function(require,module,exports){
 /*global angular Masonry*/
 module.exports = angular.module('MasonryNg', []).directive('masonryDirective', function($timeout) {
       return function(scope, element, attrs) {
@@ -196,7 +201,7 @@ module.exports = angular.module('ProfilePageModule')
  .controller('ProfilePageController', ['$scope','$routeParams', 'ProfilePinsSvc', 
     function($scope, $routeParams, ProfilePinsSvc){
 
-     ProfilePinsSvc.getUserPins($routeParams.user)
+     ProfilePinsSvc.getUserPins($routeParams.userId)
       .then(
        function(res){
         $scope.myPins =  res.data.pins;
@@ -237,6 +242,54 @@ module.exports = angular.module('ProfilePageModule', []).service('ProfilePinsSvc
             
 }]);
 },{}],11:[function(require,module,exports){
+/*global angular */
+
+module.exports = angular.module('UserWallPageModule')
+ .controller('UserWallPageController', ['$scope','$routeParams', 'UserWallPinsSvc', 
+    function($scope, $routeParams, UserWallPinsSvc){
+    $scope.userName = $routeParams.userName;  
+
+     UserWallPinsSvc.getUserPins($routeParams.userId)
+      .then(
+       function(res){
+        $scope.userPins =  res.data.pins;
+        
+      }, 
+      function(err){
+        $scope.messageProfile = err;
+      }
+    );
+    
+}]);
+},{}],12:[function(require,module,exports){
+/*global angular*/
+module.exports = angular.module('UserWallPageModule')
+ .directive('userPinsWall',function(){
+     return {
+         templateUrl: 'views/userWallPage/directives/userPins.wall.html'
+     };
+ })
+},{}],13:[function(require,module,exports){
+/*global angular*/
+module.exports = angular.module('UserWallPageModule', []).service('UserWallPinsSvc', ['$http', function($http) {
+            
+    this.getUserPins = function(userId){
+        return $http.get('/pins/' + userId );  
+    };
+        
+            
+}]);
+},{}],14:[function(require,module,exports){
+/*global angular*/
+
+//exports module
+module.exports = angular.module('UserWallPageModule',[]);
+
+// require all controllers, services, directives
+require("./services/userWallPage.client.service");
+require("./controllers/userWallPage.client.controller");
+require("./directives/userWallPage.client.directive");
+},{"./controllers/userWallPage.client.controller":11,"./directives/userWallPage.client.directive":12,"./services/userWallPage.client.service":13}],15:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.2
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1260,11 +1313,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],12:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":11}],13:[function(require,module,exports){
+},{"./angular-route":15}],17:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.1
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -31834,11 +31887,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],14:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":13}],15:[function(require,module,exports){
+},{"./angular":17}],19:[function(require,module,exports){
 // This file is autogenerated via the `commonjs` Grunt task. You can require() this file in a CommonJS environment.
 require('../../js/transition.js')
 require('../../js/alert.js')
@@ -31852,7 +31905,7 @@ require('../../js/popover.js')
 require('../../js/scrollspy.js')
 require('../../js/tab.js')
 require('../../js/affix.js')
-},{"../../js/affix.js":16,"../../js/alert.js":17,"../../js/button.js":18,"../../js/carousel.js":19,"../../js/collapse.js":20,"../../js/dropdown.js":21,"../../js/modal.js":22,"../../js/popover.js":23,"../../js/scrollspy.js":24,"../../js/tab.js":25,"../../js/tooltip.js":26,"../../js/transition.js":27}],16:[function(require,module,exports){
+},{"../../js/affix.js":20,"../../js/alert.js":21,"../../js/button.js":22,"../../js/carousel.js":23,"../../js/collapse.js":24,"../../js/dropdown.js":25,"../../js/modal.js":26,"../../js/popover.js":27,"../../js/scrollspy.js":28,"../../js/tab.js":29,"../../js/tooltip.js":30,"../../js/transition.js":31}],20:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: affix.js v3.3.6
  * http://getbootstrap.com/javascript/#affix
@@ -32016,7 +32069,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],17:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: alert.js v3.3.6
  * http://getbootstrap.com/javascript/#alerts
@@ -32112,7 +32165,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],18:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: button.js v3.3.6
  * http://getbootstrap.com/javascript/#buttons
@@ -32234,7 +32287,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],19:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: carousel.js v3.3.6
  * http://getbootstrap.com/javascript/#carousel
@@ -32473,7 +32526,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],20:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: collapse.js v3.3.6
  * http://getbootstrap.com/javascript/#collapse
@@ -32686,7 +32739,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],21:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: dropdown.js v3.3.6
  * http://getbootstrap.com/javascript/#dropdowns
@@ -32853,7 +32906,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],22:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: modal.js v3.3.6
  * http://getbootstrap.com/javascript/#modals
@@ -33192,7 +33245,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],23:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: popover.js v3.3.6
  * http://getbootstrap.com/javascript/#popovers
@@ -33302,7 +33355,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],24:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: scrollspy.js v3.3.6
  * http://getbootstrap.com/javascript/#scrollspy
@@ -33476,7 +33529,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],25:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: tab.js v3.3.6
  * http://getbootstrap.com/javascript/#tabs
@@ -33633,7 +33686,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],26:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: tooltip.js v3.3.6
  * http://getbootstrap.com/javascript/#tooltip
@@ -34149,7 +34202,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],27:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 /* ========================================================================
  * Bootstrap: transition.js v3.3.6
  * http://getbootstrap.com/javascript/#transitions
@@ -34210,7 +34263,7 @@ require('../../js/affix.js')
 
 }(jQuery);
 
-},{}],28:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.2
  * http://jquery.com/
