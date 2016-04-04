@@ -15,4 +15,20 @@ module.exports = angular.module('ProfilePageModule')
       }
     );
     
+    $scope.deletePinProfile = function(pinId, pinIdx){
+        if (confirm('Are you sure you want to delete this pin?')) {
+            ProfilePinsSvc.deletePin(pinId)
+            .then(
+                function(res){
+              	   	 $scope.myPins.splice(pinIdx, 1);
+              	   	 // error, grab the error message from the response and display it on the form.
+              	   	 $scope.messageProfile = res.data.message;
+                },
+                function(error) {
+          	        $scope.messageProfile = 'error getting to the server : ' + error.status + ' ' + error.statusText;
+    	        } 
+            );
+        }
+    };
+    
 }]);

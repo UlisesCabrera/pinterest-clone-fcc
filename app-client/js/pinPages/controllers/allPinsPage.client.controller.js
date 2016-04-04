@@ -54,7 +54,7 @@ module.exports = angular.module('PinPagesModule')
         );
     };
     
-    $scope.deleteBook = function(pinId, pinIdx){
+    $scope.deletePin = function(pinId, pinIdx){
         if (confirm('Are you sure you want to delete this pin?')) {
             PinsSvc.deletePin(pinId)
             .then(

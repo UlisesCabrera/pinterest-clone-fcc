@@ -78,6 +78,15 @@ module.exports = angular.module('MasonryNg', []).directive('masonryDirective', f
              
           }
       };
+}).directive('onError', function() {
+  return {
+    restrict:'A',
+    link: function(scope, element, attr) {
+      element.on('error', function() {
+        element.attr('src', attr.onError);
+      })
+    }
+  }
 });
 },{}],3:[function(require,module,exports){
 /*global angular $ Masonry*/
@@ -136,7 +145,7 @@ module.exports = angular.module('PinPagesModule')
         );
     };
     
-    $scope.deleteBook = function(pinId, pinIdx){
+    $scope.deletePin = function(pinId, pinIdx){
         if (confirm('Are you sure you want to delete this pin?')) {
             PinsSvc.deletePin(pinId)
             .then(
@@ -212,6 +221,22 @@ module.exports = angular.module('ProfilePageModule')
       }
     );
     
+    $scope.deletePinProfile = function(pinId, pinIdx){
+        if (confirm('Are you sure you want to delete this pin?')) {
+            ProfilePinsSvc.deletePin(pinId)
+            .then(
+                function(res){
+              	   	 $scope.myPins.splice(pinIdx, 1);
+              	   	 // error, grab the error message from the response and display it on the form.
+              	   	 $scope.messageProfile = res.data.message;
+                },
+                function(error) {
+          	        $scope.messageProfile = 'error getting to the server : ' + error.status + ' ' + error.statusText;
+    	        } 
+            );
+        }
+    };
+    
 }]);
 },{}],8:[function(require,module,exports){
 /*global angular*/
@@ -238,7 +263,10 @@ module.exports = angular.module('ProfilePageModule', []).service('ProfilePinsSvc
     this.getUserPins = function(userId){
         return $http.get('/pins/' + userId );  
     };
-        
+    
+    this.deletePin = function(pinId) {
+        return $http.delete('/pins/' + pinId);  
+    };    
             
 }]);
 },{}],11:[function(require,module,exports){

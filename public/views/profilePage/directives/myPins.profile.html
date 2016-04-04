@@ -4,7 +4,7 @@
     </div>
     <div class="grid" >
       <div class="col-xs-6 col-sm-4 col-md-3 grid-item" ng-repeat="pin in myPins" masonry-directive>
-        <img ng-src="{{pin.imgUrl}}" class='img-responsive' alt="{{pin.name}}">
+        <img ng-src="{{pin.imgUrl}}" class='img-responsive' alt="{{pin.name}}" on-error='../images/page_break_1-512.png'>
     
         <h3>{{pin.name}}</h3>
         <p>{{pin.owner_name}}</p>
@@ -12,7 +12,7 @@
         <button class="btn btn-danger"
                 role="button" 
                 ng-if='pin.owner_id == $parent.currentUser()._id' 
-                ng-click='deletepin(pin._id, $index)'>Delete</button>
+                ng-click='deletePinProfile(pin._id, $index)'>Delete</button>
         </p>
       </div>
     </div>

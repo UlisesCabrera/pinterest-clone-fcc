@@ -4,6 +4,9 @@ module.exports = angular.module('ProfilePageModule', []).service('ProfilePinsSvc
     this.getUserPins = function(userId){
         return $http.get('/pins/' + userId );  
     };
-        
+    
+    this.deletePin = function(pinId) {
+        return $http.delete('/pins/' + pinId);  
+    };    
             
 }]);
