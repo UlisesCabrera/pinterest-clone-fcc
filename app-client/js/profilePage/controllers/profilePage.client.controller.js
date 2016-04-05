@@ -3,11 +3,14 @@
 module.exports = angular.module('ProfilePageModule')
  .controller('ProfilePageController', ['$scope','$routeParams', 'ProfilePinsSvc', 
     function($scope, $routeParams, ProfilePinsSvc){
+    
+    $scope.loading = true;
 
      ProfilePinsSvc.getUserPins($routeParams.userId)
       .then(
        function(res){
         $scope.myPins =  res.data.pins;
+        $scope.loading = false;
         
       }, 
       function(err){

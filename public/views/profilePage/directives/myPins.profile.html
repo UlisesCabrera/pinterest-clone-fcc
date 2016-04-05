@@ -1,19 +1,14 @@
-<div class='row'>
-    <div class="page-header">
-      <h3 class='text-center'> My Pins: </h3>
-    </div>
-    <div class="grid" >
-      <div class="col-xs-6 col-sm-4 col-md-3 grid-item" ng-repeat="pin in myPins" masonry-directive>
-        <img ng-src="{{pin.imgUrl}}" class='img-responsive' alt="{{pin.name}}" on-error='../images/page_break_1-512.png'>
-    
-        <h3>{{pin.name}}</h3>
-        <p>{{pin.owner_name}}</p>
-        <p ng-if='pin.name'>
-        <button class="btn btn-danger"
-                role="button" 
-                ng-if='pin.owner_id == $parent.currentUser()._id' 
-                ng-click='deletePinProfile(pin._id, $index)'>Delete</button>
-        </p>
+<div class="grid" >
+  <div class="col-xs-12 col-sm-4 col-md-3 grid-item" ng-repeat="pin in myPins" masonry-directive>
+    <img class='close-icon-img'
+         src='../images/icon-close.png'
+         ng-if='pin.owner_id == $parent.currentUser()._id'  
+         ng-click='deletePinProfile(pin._id, $index)'>    
+    <div class='hovereffect'>
+      <img ng-src="{{pin.imgUrl}}" class='img-responsive' alt="{{pin.name}}" on-error='../images/page_break_1-512.png'>
+      <div class='overlay'> 
+        <h2 class='text-center'>{{pin.name}}</h2>
       </div>
     </div>
+  </div>
 </div>

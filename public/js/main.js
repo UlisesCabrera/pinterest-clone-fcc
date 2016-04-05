@@ -43,8 +43,8 @@ angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule
         redirectTo: '/'
       });
       
-}).controller('PinterestCloneController',['$scope', '$http',
-    function($scope, $http){
+}).controller('PinterestCloneController',['$scope', '$http', '$location',
+    function($scope, $http, $location){
         $scope.currentUser = function() {
             return window.user ? window.user : null;
         };
@@ -56,12 +56,20 @@ angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule
                 }
             });
         };
+        
+        $scope.isHomePage = function(){
+            if ($location.path() == '/'){
+                return true;
+            } else {
+                return false;
+            }
+        }
 }]);
 },{"./common/angular.masonry.client.directive.js":2,"./pinPages/pinPages.module":5,"./profilePage/profilePage.module":9,"./userWallPage/userWallPage.module":14,"angular":18,"angular-route":16,"bootstrap":19,"jquery":32}],2:[function(require,module,exports){
 /*global angular Masonry*/
 module.exports = angular.module('MasonryNg', []).directive('masonryDirective', function($timeout) {
       return function(scope, element, attrs) {
-          if (scope.$last){
+          if (scope.$last === true){
              $timeout(function () {
                     var parent = element.parent();
                     var masonry = new Masonry(parent[0], {
@@ -84,9 +92,9 @@ module.exports = angular.module('MasonryNg', []).directive('masonryDirective', f
     link: function(scope, element, attr) {
       element.on('error', function() {
         element.attr('src', attr.onError);
-      })
+      });
     }
-  }
+  };
 });
 },{}],3:[function(require,module,exports){
 /*global angular $ Masonry*/
@@ -102,6 +110,8 @@ module.exports = angular.module('PinPagesModule')
       owner_name: ''
     };
 
+    $scope.loading = true;
+
     // will hold all the books
     $scope.pins = [];
     
@@ -110,7 +120,8 @@ module.exports = angular.module('PinPagesModule')
             function(res){
             	if (res.data.state === 'success') {
             		$scope.pins = res.data.pins;
-            		
+            		$scope.loading = false;
+
             	} else {
             		$scope.message = res.data.message;
             		
@@ -209,11 +220,14 @@ module.exports = angular.module('PinPagesModule', []).service('PinsSvc', ['$http
 module.exports = angular.module('ProfilePageModule')
  .controller('ProfilePageController', ['$scope','$routeParams', 'ProfilePinsSvc', 
     function($scope, $routeParams, ProfilePinsSvc){
+    
+    $scope.loading = true;
 
      ProfilePinsSvc.getUserPins($routeParams.userId)
       .then(
        function(res){
         $scope.myPins =  res.data.pins;
+        $scope.loading = false;
         
       }, 
       function(err){
@@ -276,12 +290,12 @@ module.exports = angular.module('UserWallPageModule')
  .controller('UserWallPageController', ['$scope','$routeParams', 'UserWallPinsSvc', 
     function($scope, $routeParams, UserWallPinsSvc){
     $scope.userName = $routeParams.userName;  
-
+    $scope.loading = true;
      UserWallPinsSvc.getUserPins($routeParams.userId)
       .then(
        function(res){
         $scope.userPins =  res.data.pins;
-        
+        $scope.loading = false;
       }, 
       function(err){
         $scope.messageProfile = err;

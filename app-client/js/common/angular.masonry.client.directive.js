@@ -1,7 +1,7 @@
 /*global angular Masonry*/
 module.exports = angular.module('MasonryNg', []).directive('masonryDirective', function($timeout) {
       return function(scope, element, attrs) {
-          if (scope.$last){
+          if (scope.$last === true){
              $timeout(function () {
                     var parent = element.parent();
                     var masonry = new Masonry(parent[0], {
@@ -24,7 +24,7 @@ module.exports = angular.module('MasonryNg', []).directive('masonryDirective', f
     link: function(scope, element, attr) {
       element.on('error', function() {
         element.attr('src', attr.onError);
-      })
+      });
     }
-  }
+  };
 });

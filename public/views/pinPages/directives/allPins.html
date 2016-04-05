@@ -1,14 +1,15 @@
 <div class="grid" >
-  <div class="col-xs-6 col-sm-4 col-md-3 grid-item" ng-repeat="pin in pins" masonry-directive>
-    <img ng-src="{{pin.imgUrl}}" class='img-responsive' alt="{{pin.name}}" on-error='../images/page_break_1-512.png'>
-
-    <h3>{{pin.name}}</h3>
-    <p><a href='#/wall/{{pin.owner_id}}/{{pin.owner_name}}'>{{pin.owner_name}}</a></p>
-    <p ng-if='pin.name'>
-    <button class="btn btn-danger"
-            role="button" 
-            ng-if='pin.owner_id == $parent.currentUser()._id' 
-            ng-click='deletePin(pin._id, $index)'>Delete</button>
-    </p>
+  <div class="col-xs-12 col-sm-4 col-md-3 grid-item" ng-repeat="pin in pins" masonry-directive>
+    <img class='close-icon-img'
+         src='../images/icon-close.png'
+         ng-if='pin.owner_id == $parent.currentUser()._id'  
+         ng-click='deletePin(pin._id, $index)'>
+    <div class="hovereffect">
+      <img ng-src="{{pin.imgUrl}}" class='img-responsive' alt="{{pin.name}}" on-error='../images/page_break_1-512.png'>
+      <div class="overlay">  
+        <h2 class='text-center'>{{pin.name}}</h2>
+        <p ng-if='pin.owner_id != $parent.currentUser()._id'><a class="info" href='#/wall/{{pin.owner_id}}/{{pin.owner_name}}'>by: {{pin.owner_name}}</a></p>
+      </div>  
+    </div>
   </div>
 </div>

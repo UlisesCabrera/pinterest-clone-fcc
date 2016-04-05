@@ -7,14 +7,19 @@
 </div>
 
 <div class='row'>
-    <div class='col-xs-12'>
-        <div class="jumbotron">
-          <h1 class='text-center'>Hello, {{ $parent.currentUser().name }}</h1>
-        </div>
+    <div class="page-header">
+      <h1 class='text-center'>Hello, {{ $parent.currentUser().name }}</h1>    
+      <h3 class='text-center'> My Pins: </h3>
     </div>
+    <div class='col-xs-12' ng-show='loading'>
+         <img class='center-block' src='../images/loading-spinner.gif' alt='loader'/>
+    </div>    
+    <my-pins-profile ng-hide='loading'></my-pins-profile>
 </div>
 
-<my-pins-profile></my-pins-profile>
+
+
+
 
 
 

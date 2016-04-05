@@ -1,1 +1,9 @@
-<user-pins-wall></user-pins-wall>
+<div class='row'>
+    <div class="page-header">
+      <h3 class='text-center'>{{userName}} Pins: </h3>
+    </div>
+    <div class='col-xs-12' ng-show='loading'>
+         <img class='center-block' src='../images/loading-spinner.gif' alt='loader'/>
+    </div>        
+    <user-pins-wall ng-hide='loading'></user-pins-wall>
+</div>

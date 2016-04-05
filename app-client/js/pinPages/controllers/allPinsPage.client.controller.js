@@ -11,6 +11,8 @@ module.exports = angular.module('PinPagesModule')
       owner_name: ''
     };
 
+    $scope.loading = true;
+
     // will hold all the books
     $scope.pins = [];
     
@@ -19,7 +21,8 @@ module.exports = angular.module('PinPagesModule')
             function(res){
             	if (res.data.state === 'success') {
             		$scope.pins = res.data.pins;
-            		
+            		$scope.loading = false;
+
             	} else {
             		$scope.message = res.data.message;
             		

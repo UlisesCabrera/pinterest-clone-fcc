@@ -7,4 +7,9 @@
 </div>
 
 <add-pin ng-if='$parent.currentUser()'></add-pin>
-<all-pins></all-pins>
+
+<div class='col-xs-12' ng-show='loading'>
+     <img class='center-block' src='../images/loading-spinner.gif' alt='loader'/>
+</div>
+
+<all-pins ng-hide='loading'></all-pins>

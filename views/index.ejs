@@ -26,6 +26,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#/"><%= title %></a>
+          <button ng-if='currentUser() && isHomePage()' type="button" class="btn btn-transparent navbar-btn" data-toggle="modal" data-target=".new-pin-modal">Add New Pin</button>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav navbar-right">

@@ -42,8 +42,8 @@ angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule
         redirectTo: '/'
       });
       
-}).controller('PinterestCloneController',['$scope', '$http',
-    function($scope, $http){
+}).controller('PinterestCloneController',['$scope', '$http', '$location',
+    function($scope, $http, $location){
         $scope.currentUser = function() {
             return window.user ? window.user : null;
         };
@@ -55,4 +55,12 @@ angular.module('PinterestClone', ['ngRoute', 'ProfilePageModule','PinPagesModule
                 }
             });
         };
+        
+        $scope.isHomePage = function(){
+            if ($location.path() == '/'){
+                return true;
+            } else {
+                return false;
+            }
+        }
 }]);
