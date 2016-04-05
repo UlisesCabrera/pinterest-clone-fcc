@@ -14,7 +14,7 @@ module.exports = angular.module('MasonryNg', []).directive('masonryDirective', f
                         },
                         transitionDuration : "0.4s"
                     });
-                });
+                }, 125);
              
           }
       };
