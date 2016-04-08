@@ -1,5 +1,6 @@
-/*global angular Masonry*/
-module.exports = angular.module('MasonryNg', []).directive('masonryDirective', function($timeout) {
+/*global angular Masonry imagesLoaded*/
+module.exports = angular.module('MasonryNg', [])
+ .directive('masonryDirective', function($timeout) {
       return function(scope, element, attrs) {
           if (scope.$last === true){
              $timeout(function () {
@@ -14,7 +15,12 @@ module.exports = angular.module('MasonryNg', []).directive('masonryDirective', f
                         },
                         transitionDuration : "0.4s"
                     });
-                }, 125);
+                    // when all then images are loaded layout all the bricks
+                    imagesLoaded( document.querySelector('.grid'), function( instance ) {
+                      masonry.layout();
+                    });
+                    
+                });
              
           }
       };
